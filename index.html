@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes</title>
+    <link rel="stylesheet" href="./src/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/95875897b7.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Notes</h1>
+    </header>
+    <main>
+      <div class="container">
+        <div class="addNote">
+          <textarea name="" id="noteTitle" placeholder="Title"></textarea>
+          <textarea
+            name=""
+            id="noteText"
+            rows="5"
+            placeholder="add Notes"
+          ></textarea>
+          <button id="addBtn" class="btn">
+            Save <i class="fa-solid fa-save" style="color: white"></i>
+          </button>
+        </div>
+
+        <div class="notes" id="notes"></div>
+      </div>
+    </main>
+    <script src="./src/app.js"></script>
+  </body>
+</html>

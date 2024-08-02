@@ -1,0 +1,105 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #242424;
+}
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: transparent;
+  color: white;
+  user-select: none;
+}
+.container {
+  width: 50%;
+  min-width: 30rem;
+  margin: auto;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+.addNote {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: #363636;
+  margin-bottom: 1rem;
+}
+.addNote textarea {
+  display: block;
+  width: 100%;
+  background-color: inherit;
+  outline: none;
+  border: none;
+  resize: none;
+  color: #e4e4e4;
+  font-size: larger;
+  font-weight: 500;
+  scrollbar-width: none;
+}
+
+.btn {
+  padding: 0.5rem;
+  font-size: larger;
+  font-weight: 500;
+  border-radius: 0.25rem;
+  background-color: transparent;
+  color: #e4e4e4;
+}
+/* .btn:hover {
+  background-color: #272727;
+} */
+
+.dateTime {
+  display: flex;
+  justify-content: space-between;
+  color: #888888;
+  user-select: none;
+}
+/* .notes {background-color: #000;} */
+.note {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: #363636;
+  color: #e4e4e4;
+}
+
+[contenteditable="true"]:focus {
+  outline: none;
+}
+
+.noteTandP h3,
+.noteTandP p,
+.note,
+.dateTime {
+  margin-bottom: 1rem;
+}
+.toolIcon {
+  width: 2rem;
+}
+.tool {
+  height: 2rem;
+  display: flex;
+  justify-content: space-between;
+  /* background: #000; */
+}
+
+.noteTandP h3,
+.noteTandP p {
+  word-wrap: break-word;
+}
+
+.delIcon {
+  height: 1.5rem;
+}
+
+.bin {
+  color: #797979;
+  font-size: 2rem;
+  cursor: pointer;
+}

@@ -1,0 +1,167 @@
+function createNotes() {
+  const title = titleInput.value,
+    note = textInput.value,
+    date = getDateAndTime("date"),
+    time = getDateAndTime();
+
+  if (title || note) {
+    // Helper function to create an element and set its properties
+    const createElement = (type, className, textContent = "") => {
+      const element = document.createElement(type);
+      if (className) element.className = className;
+      if (textContent) element.textContent = textContent;
+      return element;
+    };
+
+    // Create elements
+    const noteParent = createElement("div", "note"),
+      time$Date = createElement("div", "dateTime"),
+      tiile$Note = createElement("div", "noteTandP"),
+      toolBar = createElement("div", "tool"),
+      dateEl = createElement("p", null, date),
+      timeEl = createElement("p", null, time),
+      noteHeading = createElement("h3", null, title),
+      noteEl = createElement("p", null, note),
+      editBtn = createElement("button", "fa-solid fa-pen"),
+      delBtnIcon = createElement("span", "material-symbols-outlined", "delete"),
+      delBtn = createElement("button");
+
+    delBtn.appendChild(delBtnIcon);
+
+    // Append elements to their respective parents
+    time$Date.append(dateEl, timeEl);
+    tiile$Note.append(noteHeading, noteEl);
+    toolBar.append(editBtn, delBtn);
+    noteParent.append(time$Date, tiile$Note, toolBar);
+
+    // Event listener for delete button
+    delBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      noteParent.remove();
+      removeNote(note);
+    });
+
+    // Prepend note to the container and update storage
+    noteContainer.prepend(noteParent);
+    addToLocalStorage();
+    clearTextArea();
+  }
+}
+
+function createNotes() {
+  const title = titleInput.value,
+    note = textInput.value,
+    date = getDateAndTime("date"),
+    time = getDateAndTime();
+
+  if (title || note) {
+    const createElement = (type, options = {}) => {
+      const { className, textContent, children } = options;
+      const element = document.createElement(type);
+      if (className) element.className = className;
+      if (textContent) element.textContent = textContent;
+      if (children) children.forEach((child) => element.appendChild(child));
+      return element;
+    };
+
+    // Creating elements
+    const noteParent = createElement("div", { className: "note" }),
+      time$Date = createElement("div", {
+        className: "dateTime",
+        children: [
+          createElement("p", { textContent: date }),
+          createElement("p", { textContent: time }),
+        ],
+      }),
+      tiile$Note = createElement("div", {
+        className: "noteTandP",
+        children: [
+          createElement("h3", { textContent: title }),
+          createElement("p", { textContent: note }),
+        ],
+      }),
+      toolBar = createElement("div", {
+        className: "tool",
+        children: [
+          createElement("button", { className: "fa-solid fa-pen" }),
+          createElement("button", {
+            children: [
+              createElement("span", {
+                className: "material-symbols-outlined",
+                textContent: "delete",
+              }),
+            ],
+          }),
+        ],
+      });
+
+    noteParent.append(time$Date, tiile$Note, toolBar);
+
+    toolBar
+      .querySelector("button:last-child")
+      .addEventListener("click", (e) => {
+        e.preventDefault();
+        noteParent.remove();
+        removeNote(note);
+      });
+
+    noteContainer.prepend(noteParent);
+    addToLocalStorage();
+    clearTextArea();
+  }
+}
+
+// my own
+function createNotes() {
+  const title = titleInput.value,
+    note = textInput.value,
+    date = getDateAndTime("date"),
+    time = getDateAndTime();
+
+  if (title || note) {
+    // divs
+    const noteParent = document.createElement("div"),
+      tiile$Note = document.createElement("div"),
+      time$Date = document.createElement("div"),
+      toolBar = document.createElement("div"),
+      dateEl = document.createElement("p"),
+      timeEl = document.createElement("p"),
+      noteHeading = document.createElement("h3"),
+      noteEl = document.createElement("p"),
+      editBtn = document.createElement("button"),
+      delBtn = document.createElement("button"),
+      delBtnIcon = document.createElement("span");
+
+    time$Date.className = "dateTime";
+    tiile$Note.className = "noteTandP";
+    noteParent.className = "note";
+    toolBar.className = "tool";
+
+    dateEl.textContent = date;
+    timeEl.textContent = time;
+
+    noteHeading.textContent = title;
+    noteEl.textContent = note;
+
+    editBtn.className = "fa-solid fa-pen";
+    delBtnIcon.className = "material-symbols-outlined";
+    delBtnIcon.textContent = "delete";
+    delBtn.append(delBtnIcon);
+
+    time$Date.append(dateEl, timeEl);
+    tiile$Note.append(noteHeading, noteEl);
+    toolBar.append(editBtn, delBtn);
+    noteParent.append(time$Date, tiile$Note, toolBar);
+
+    // events
+    delBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      noteParent.remove();
+      removeNote(note);
+    });
+
+    noteContainer.prepend(noteParent);
+    addToLocalStorage();
+    clearTextArea();
+  }
+}
