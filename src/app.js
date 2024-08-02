@@ -3,7 +3,7 @@ const titleInput = document.getElementById("noteTitle"),
   addButton = document.getElementById("addBtn"),
   noteContainer = document.getElementById("notes");
 
-  getFromLocalStorage();
+getFromLocalStorage();
 addButton.addEventListener("click", createNotes);
 
 function createNotes() {
@@ -24,42 +24,40 @@ function createNotes() {
           <p>${note}</p>
         </div>
         <div class="tool">
-          <button class="fa-solid fa-pen"></button>
+          <span class="material-symbols-outlined bin" > <img src="./src/assets/edit.svg" alt="delete"> </span>
           <button>
-            <span class="material-symbols-outlined">delete</span>
+            <img src="./src/assets/delete.svg" alt="delete">
           </button>
         </div>
       </div>
     `;
 
+    // <span class="material-symbols-outlined">delete</span>;
+
     // Insert the note into the container
     noteContainer.insertAdjacentHTML("afterbegin", noteHTML);
+    addToLocalStorage();
 
     // Event listener for the delete button
     const delBtn = noteContainer.querySelector(".note .tool button:last-child");
     delBtn.addEventListener("click", (e) => {
       e.preventDefault();
       delBtn.closest(".note").remove();
-      removeNote(note);
+      // removeNote(note);
+      removeFromLocalStorage(note);
     });
 
-    addToLocalStorage();
     clearTextArea();
   }
 }
 
 
-function removeNote(note) {
-  const noteRemove = note;
-  const existingNote = localStorage.getItem("notes");
-  const noteArray = existingNote ? JSON.parse(existingNote) : [];
-  const noteMap = noteArray.map((notee) => {
-    const { title, notes, date, time } = notee;
-    return notes
-  })
-  console.log(noteMap);
-}
 
+function removeFromLocalStorage(noteContent) {
+  let notes = JSON.parse(localStorage.getItem("notes")) || [];
+  notes = notes.filter((note) => note.notes !== noteContent);
+  localStorage.setItem("notes", JSON.stringify(notes));
+}
 
 function addToLocalStorage() {
   const existingNote = localStorage.getItem("notes");
@@ -67,16 +65,15 @@ function addToLocalStorage() {
 
   const noteObj = {
     id: crypto.randomUUID(),
-    title : titleInput.value,
-    notes : textInput.value,
-    date : getDateAndTime("date"),
-    time : getDateAndTime(),
+    title: titleInput.value,
+    notes: textInput.value,
+    date: getDateAndTime("date"),
+    time: getDateAndTime(),
   };
 
   noteArray.push(noteObj);
   localStorage.setItem("notes", JSON.stringify(noteArray));
 }
-
 
 function getFromLocalStorage() {
   const storedNotes = localStorage.getItem("notes");
@@ -101,12 +98,10 @@ function getFromLocalStorage() {
         <div>
 
         <div class="tool">
-        <span class="material-symbols-outlined bin" > border_color </span>
+        <span class="material-symbols-outlined bin" > <img src="./src/assets/edit.svg" alt="delete"> </span>
         <button>
-        <span class="material-symbols-outlined bin" >
-          delete
-        </span>
-        </button>
+            <img src="./src/assets/delete.svg" alt="delete">
+          </button>
 
         </div>
 `;
@@ -114,6 +109,13 @@ function getFromLocalStorage() {
     div.className = "note";
     div.innerHTML = noteEl;
     noteContainer.prepend(div);
+
+    const delBtn = noteContainer.querySelector(".note .tool button:last-child");
+    delBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      delBtn.closest(".note").remove();
+      removeFromLocalStorage(notes);
+    });
   });
 }
 
@@ -139,6 +141,7 @@ function clearTextArea() {
   textInput.value = "";
 }
 
-// localStorage.clear()
-
 // tyuio
+// const num = [1,2,3,4,5]
+
+
