@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Grid Layout</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: masonry;
+        align-items: start;
+        gap: 1rem;
+        
+      }
+
+      .note {
+        background-color: rgb(163, 162, 162);
+        padding: 16px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        width: 15rem;
+        /* height: fit-content; */
+        /* margin: 15px 10px; */
+      }
+    </style>
+  </head>
+  <body style="background-color: #333">
+    <div class="grid-container">
+      <div class="note">
+        Short note. <br />
+        Note with a lot of content. Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit.
+      </div>
+      <div class="note">A bit longer note with more content to display.</div>
+      <div class="note">
+        Note with a lot of content. Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit. Vestibulum et neque nec orci luctus convallis. Lorem
+        ipsum dolor sit amet consectetur adipisicing elit. Assumenda impedit
+        illum, optio voluptatem vero totam veniam consequatur molestias
+        voluptatum! Quod suscipit quisquam magni sunt similique corporis
+        laboriosam labore voluptates sit.
+      </div>
+      <div class="note">Another short note.</div>
+      <div class="note">Another medium-length note to see how it behaves.</div>
+      <div class="note">Another medium-length note to see how it behaves.</div>
+      <div class="note">
+        Another medium-length note to see how it behaves. optio voluptatem vero
+        totam veniam consequatur molestias voluptatum! Quod suscipit quisquam
+        magni sunt similique corporis laboriosam labore voluptates sit.
+      </div>
+      <div class="note">
+        Another medium-length note to see how it behaves. optio voluptatem vero
+        totam veniam consequatur molestias voluptatum! Quod suscipit quisquam
+        magni sunt similique corporis laboriosam labore voluptates sit.
+      </div>
+    </div>
+  </body>
+</html>

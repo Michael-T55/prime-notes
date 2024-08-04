@@ -1,0 +1,343 @@
+/* what are the uses of these attributes aria-multiline, role, spellcheck, aria-label, tabindex
+
+<div
+  contenteditable="true"
+  aria-multiline="true"
+  role="textbox"
+  class="notranslate IZ65Hb-YPqjbf fmcmS-x3Eknd h1U9Be-YPqjbf"
+  tabindex="0"
+  spellcheck="true"
+  aria-label="Take a note…"
+>
+  k
+</div>
+
+*/
+
+
+function addNote() {
+  if (textarea.value || textTitle.value) {
+    // creating Elements
+
+    noteEl.innerHTML = `
+      <div>
+        <p class="noteDate">${fullDate}</p>
+        <h3 class="noteTitle" contenteditable="true">${note.title}</h3>
+        <p class="note" contenteditable="true">${note.notes}</p>
+      </div>
+`;
+
+
+    const div = document.createElement("div");
+    const p = document.createElement("p");
+    const h3 = document.createElement("h3");
+    const pDate = document.createElement("p");
+
+    console.log(pDate);
+    // pDate.textContent = fullDate;
+
+    // Addding ClassNames and Attributes
+    pDate.className = "noteDate";
+    p.className = "note";
+    h3.className = "noteTitle";
+    div.className = "addedNotes";
+    p.setAttribute("contenteditable", "true");
+
+    p.textContent = textarea.value;
+    h3.textContent = textTitle.value;
+
+    // Appending Elements
+    div.append(pDate);
+    div.append(h3);
+    div.append(p);
+    notesContainer.prepend(div);
+
+    // Local Storage
+    addToLocalStorage();
+    // getFromLocalStorage();
+    // rCreat();
+
+    clearTextArea();
+  }
+}
+
+function removeFromLocalStorage(noteId) {
+  const existingNote = localStorage.getItem("notes");
+  if (!existingNote) {
+    console.log("No notes found in localStorage.");
+    return;
+  }
+
+  let noteArray = JSON.parse(existingNote);
+
+  // Filter out the note with the specified id
+  noteArray = noteArray.filter((note) => note.id !== noteId);
+
+  // Save the updated notes array back to localStorage
+  localStorage.setItem("notes", JSON.stringify(noteArray));
+  console.log(`Note with ID ${noteId} has been removed.`);
+  console.log(noteArray);
+}
+
+/* --background: #15171a; */
+  /* --background: #292d35; */
+  /* --background: #23272e; */
+  /* --accentColor: #a8b3cf60; */
+  /* --secondaryColor: #1c1f26; */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prime Notes</title>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <div class="nav">
+      <div>
+        <h1>Prime Notes</h1>
+      </div>
+    </div>
+
+    <div class="parentContainer">
+      <div class="container">
+        <div class="">
+          <textarea
+            name=""
+            id=""
+            contenteditable="true"
+            class="title"
+            placeholder="Title"
+            rows="1"
+            aria-multiline="true"
+          ></textarea>
+        </div>
+        <textarea
+          name=""
+          id="write"
+          placeholder="Write your notes here.."
+          class="write"
+          contenteditable="true"
+          aria-multiline="true"
+          spellcheck="true"
+        ></textarea>
+        <div class="tool-bar">
+          <button class="btn toRight" id="addBtn">save</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="notes"></div>
+    <script defer src="./src/app.js"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+:root {
+  --background: #191919;
+  --primaryColor: ;
+  --secondaryColor: #333;
+  --accentColor: #5e5e5e;
+  --textColor: #ffffff;
+  --selection: #e2e2e2;
+}
+body {
+  background-color: var(--background);
+}
+button {
+  outline: none;
+  background: none;
+  cursor: pointer;
+}
+
+h1 {
+  color: #131212;
+  color: #a8b3cf60;
+  padding: 0 1rem;
+}
+
+
+.container {
+  background-color: var(--secondaryColor);
+  color: #ffffff;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  width: 50%;
+  min-width: 30rem;
+  margin: auto;
+}
+
+.write {
+  resize: none;
+  outline: none;
+  border: none;
+  background-color: inherit;
+  color: inherit;
+  font-size: large;
+  font-family: cascadia code;
+  scrollbar-width: none;
+  width: 100%;
+}
+.write::placeholder,
+.title::placeholder {
+  color: var(--accentColor);
+}
+
+.title {
+  resize: none;
+  outline: none;
+  border: none;
+  font-size: 1.5rem;
+  background-color: inherit;
+  scrollbar-width: none;
+  color: inherit;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+
+.toRight {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.btn {
+  color: #e4e4e4;
+  font-size: large;
+  font-weight: 500;
+  outline: none;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  user-select: none;
+  background-color: #242424;
+}
+
+.tool-bar {
+  min-height: 2rem;
+  position: relative;
+}
+.nav {
+  display: flex;
+  border-bottom: 1px solid #333;
+  margin-bottom: 1rem;
+}
+
+.note,
+.noteTitle {
+  word-wrap: break-word;
+}
+.noteTitle {
+  margin-bottom: 1rem;
+}
+.notes {
+  width: 50%;
+  margin: auto;
+  min-width: 30rem;
+}
+
+
+
+[contenteditable="true"]:focus {
+  outline: none;
+}
+
+::selection {
+  background-color: var(--selection);
+  color: #131212;
+}
+
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}
+
+
+<div class="tool">
+        <button id="" class="btn icoBtn"> <i class="fa-solid fa-pen"></i> <i class="fa-solid fa-trash"></i> <img src="./src/assets/edit.png" alt="edit-icon" class="toolIcon editIcon "></button>
+        <button id="delBtn" class="btn icoBtn"><img src="./src/assets/delete.png" alt="delete-icon" class="toolIcon delBtn"></button>
+      </div>
+
+
+
+      
+/*
+const noteEl = ` 
+      <div class="dateTime">
+        <p>${date}</p>
+        <p>${time}</p>
+      </div>
+
+      <div class="noteTandP">
+        <h3>${title}</h3>
+        <p>${note}</p>
+      </div>
+
+      <div class="tool">
+        <button id="" class="btn"> <i class="fa-solid fa-pen"></i> </button>
+        <button id="delBtn" class="btn"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    `;
+*/

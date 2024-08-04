@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Toggle Image</title>
+</head>
+<body>
+    <img src="delete.png" id="image" alt="Toggle">
+    <script>
+        const img = document.getElementById("image")
+
+        let t = true;
+
+        img.addEventListener("click", function() {
+            t = !t
+            if (t) {
+                img.src = "edit.svg"
+            } else {
+                img.src = "delete.png"
+                
+            }
+        })
+        
+    </script>
+</body>
+</html>

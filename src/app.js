@@ -1,9 +1,44 @@
 const titleInput = document.getElementById("noteTitle"),
   textInput = document.getElementById("noteText"),
   addButton = document.getElementById("addBtn"),
-  noteContainer = document.getElementById("notes");
+  noteContainer = document.getElementById("notes"),
+  changeView = document.getElementById("toggleView");
+  
+  getFromLocalStorage();
 
-getFromLocalStorage();
+
+//==== input height logic
+titleInput.addEventListener("input", () => {
+  titleInput.style.height = "auto";
+  titleInput.style.height = titleInput.scrollHeight + "px";
+});
+
+textInput.addEventListener("input", () => {
+  textInput.style.height = "auto";
+  textInput.style.height = textInput.scrollHeight + "px";
+});
+``;
+addButton.addEventListener("click", function (e) {
+  e.preventDefault();
+  textInput.style.height = "auto";
+  titleInput.style.height = "auto";
+});
+//==== input height logic
+
+// toggle view
+let setView = true;
+changeView.addEventListener("click", function () {
+  setView = !setView;
+  if (setView) {
+    changeView.src = "./src/assets/gridView.svg";
+    noteContainer.classList.remove("gtc");
+  } else {
+    changeView.src = "./src/assets/blockView.svg";
+    noteContainer.classList.add("gtc");
+  }
+});
+
+
 addButton.addEventListener("click", createNotes);
 
 function createNotes() {
@@ -11,6 +46,8 @@ function createNotes() {
     note = textInput.value,
     date = getDateAndTime("date"),
     time = getDateAndTime();
+
+    
 
   if (title || note) {
     const noteHTML = `
@@ -24,39 +61,60 @@ function createNotes() {
           <p>${note}</p>
         </div>
         <div class="tool">
-          <span class="material-symbols-outlined bin" > <img src="./src/assets/edit.svg" alt="delete"> </span>
-          <button>
+          <button class="editButton"> 
+          <img src="./src/assets/edit.svg" alt="delete"> 
+          </button>
+          <button class="deleteButton">
             <img src="./src/assets/delete.svg" alt="delete">
           </button>
         </div>
       </div>
     `;
 
-    // <span class="material-symbols-outlined">delete</span>;
-
     // Insert the note into the container
     noteContainer.insertAdjacentHTML("afterbegin", noteHTML);
     addToLocalStorage();
+    clearTextArea();
 
     // Event listener for the delete button
+
+    const editBtn = noteContainer.querySelector(".note .tool .editButton");
+    editBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      editNote(note);
+    })
+
     const delBtn = noteContainer.querySelector(".note .tool button:last-child");
     delBtn.addEventListener("click", (e) => {
       e.preventDefault();
       delBtn.closest(".note").remove();
-      // removeNote(note);
       removeFromLocalStorage(note);
     });
-
-    clearTextArea();
   }
 }
 
-
-
 function removeFromLocalStorage(noteContent) {
   let notes = JSON.parse(localStorage.getItem("notes")) || [];
-  notes = notes.filter((note) => note.notes !== noteContent);
+  notes = notes.filter((note) => note.notes === noteContent);
   localStorage.setItem("notes", JSON.stringify(notes));
+}
+
+// dfghjkl;
+function editNote(noteD) {
+  console.log(noteD);
+  let notes = JSON.parse(localStorage.getItem("notes")) || [];
+  console.log(notes)
+  notes = notes.filter((note) => {
+    // note.notes !== noteD;
+    if (note.notes === noteD) {
+      console.log("equal")
+      document.createElement("div")
+      
+    }
+  });
+
+   
+  // console.log(notes)
 }
 
 function addToLocalStorage() {
@@ -92,13 +150,14 @@ function getFromLocalStorage() {
         <p>${time}</p>
        </div>
 
-       <div class="noteTandP">
-        <h3 contenteditable="true">${title}</h3>
-        <p contenteditable="true">${notes}</p>
-        <div>
+      
+        <div class="noteTandP">
+          <h3>${title}</h3>
+          <p>${notes}</p>
+        </div>
 
         <div class="tool">
-        <span class="material-symbols-outlined bin" > <img src="./src/assets/edit.svg" alt="delete"> </span>
+        <span class="" > <img src="./src/assets/edit.svg" alt="delete"> </span>
         <button>
             <img src="./src/assets/delete.svg" alt="delete">
           </button>
@@ -142,6 +201,3 @@ function clearTextArea() {
 }
 
 // tyuio
-// const num = [1,2,3,4,5]
-
-

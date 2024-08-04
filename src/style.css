@@ -3,11 +3,23 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", Arial, Helvetica, sans-serif;
+  scroll-behavior: smooth;
+  transition: 1s;
 }
 
 body {
   margin: 0;
   background-color: #242424;
+  /* background: url(./assets/blockView.svg); */
+}
+header {
+  display: grid;
+  grid-template-columns: 1fr 50% 1fr;
+  background-color: #888888;
+  padding: 0.2rem 0;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 button {
   border: none;
@@ -17,6 +29,7 @@ button {
   color: white;
   user-select: none;
 }
+
 .container {
   width: 50%;
   min-width: 30rem;
@@ -61,12 +74,26 @@ button {
   color: #888888;
   user-select: none;
 }
-/* .notes {background-color: #000;} */
+.notes {
+  display: grid;
+  gap: 1rem;
+  /* align-items: start; */
+  /* columns: 2; */
+  /* column-count: 1; */
+
+}
+
+.gtc {
+  grid-template-columns: repeat(2, minmax(1rem, 1fr));
+  grid-row: span 2 / auto ;
+}
+
 .note {
   padding: 1rem;
   border-radius: 0.5rem;
   background: #363636;
   color: #e4e4e4;
+  height: fit-content;
 }
 
 [contenteditable="true"]:focus {
@@ -75,7 +102,6 @@ button {
 
 .noteTandP h3,
 .noteTandP p,
-.note,
 .dateTime {
   margin-bottom: 1rem;
 }
@@ -86,7 +112,6 @@ button {
   height: 2rem;
   display: flex;
   justify-content: space-between;
-  /* background: #000; */
 }
 
 .noteTandP h3,
@@ -102,4 +127,60 @@ button {
   color: #797979;
   font-size: 2rem;
   cursor: pointer;
+  user-select: none;
+}
+
+.search input {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  color: #e4e4e4;
+  font-size: larger;
+}
+
+.search {
+  background-color: #363636;
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  /* margin: 0.5rem; */
+}
+
+.toggleView:hover {
+  background-color: #3d3d3d;
+}
+.toggleView {
+  width: 2rem;
+  cursor: pointer;
+  user-select: none;
+  padding: 0.25rem;
+  border-radius: 50%;
+  box-sizing: content-box;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .container,
+  .searchContainer {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
 }
