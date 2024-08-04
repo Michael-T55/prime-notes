@@ -1,13 +1,11 @@
-sunday aug 4
-
-
-
-
 const titleInput = document.getElementById("noteTitle"),
   textInput = document.getElementById("noteText"),
   addButton = document.getElementById("addBtn"),
   noteContainer = document.getElementById("notes"),
   changeView = document.getElementById("toggleView");
+  
+
+
   
   getFromLocalStorage();
 
@@ -43,6 +41,7 @@ changeView.addEventListener("click", function () {
   }
 });
 
+// toggle view
 
 addButton.addEventListener("click", createNotes);
 
@@ -206,164 +205,3 @@ function clearTextArea() {
 }
 
 // tyuio
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=====================================================================
-const textarea = document.querySelector(".write"),
-  textTitle = document.querySelector(".title"),
-  addButton = document.getElementById("addBtn"),
-  notesContainer = document.querySelector(".notes");
-
-
-function getDateAndTime(type) {
-  const date = new Date();
-
-  if (type === "date") {
-    const dateS = `${date}`;
-    fullDate = dateS.substring(0, 10);
-    return fullDate;
-  } else {
-    const time = date.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    });
-    return time;
-  }
-}
-
-getFromLocalStorage();
-
-//==== input height logic
-textTitle.addEventListener("input", () => {
-  textTitle.style.height = "auto";
-  textTitle.style.height = textTitle.scrollHeight + "px";
-});
-
-textarea.addEventListener("input", () => {
-  textarea.style.height = "auto";
-  textarea.style.height = textarea.scrollHeight + "px";
-});
-``;
-addButton.addEventListener("click", function (e) {
-  e.preventDefault();
-  textarea.style.height = "auto";
-  textTitle.style.height = "auto";
-});
-//==== input height logic
-
-addButton.addEventListener("click", addNote);
-
-function addNote() {
-  if (textarea.value || textTitle.value) {
-    const date = getDateAndTime("date");
-    const time = getDateAndTime();
-
-    const noteEl = `
-        <div class="noteDate">
-          <p>${date}</p>
-          <p>${time}</p>
-        </div>
-        <article>
-          <h3 class="noteTitle" contenteditable="true">${textTitle.value}</h3>
-          <p class="note" contenteditable="true">${textarea.value}</p>
-        </article>
-        <div class="tool-bar">
-          <button id="delBtn" class="btn toRight">Delete</button>
-        <div>
-`;
-
-    const div = document.createElement("div");
-    div.className = "addedNotes";
-    div.innerHTML = noteEl;
-    notesContainer.prepend(div);
-
-    addToLocalStorage();
-    clearTextArea();
-  }
-}
-
-function addToLocalStorage() {
-  const existingNote = localStorage.getItem("notes");
-  const noteArray = existingNote ? JSON.parse(existingNote) : [];
-
-  const notesObj = {
-    id: crypto.randomUUID(),
-    title: textTitle.value,
-    notes: textarea.value,
-    date: getDateAndTime("date"),
-    time: getDateAndTime(),
-  };
-  noteArray.push(notesObj);
-  localStorage.setItem("notes", JSON.stringify(noteArray));
-}
-
-function getFromLocalStorage() {
-  const storedNotes = localStorage.getItem("notes");
-  if (!storedNotes) {
-    console.log("Not note");
-    return;
-  }
-  const covertedNotes = JSON.parse(storedNotes);
-
-  covertedNotes.map((note) => {
-    const { title, notes, date, time } = note;
-
-    const noteEl = `
-       <div class="noteDate">
-        <p>${date}</p>
-        <p>${time}</p>
-       </div>
-       <article>
-        <h3 class="noteTitle" contenteditable="true">${title}</h3>
-        <p class="note" contenteditable="true">${notes}</p>
-        <article>
-        <div class="tool-bar">
-        <button id="delBtn" class="btn toRight">Delete</button>
-        <div>
-`;
-    const div = document.createElement("div");
-     div.className = "addedNotes";
-    div.innerHTML = noteEl;
-    notesContainer.prepend(div);
-  });
-}
-
-const delBtn = document.getElementById("delBtn");
-
-delBtn.addEventListener("click", deleteNote)
-function deleteNote() {
-  const addedNotes = document.querySelector(".addedNotes")
-  if (addedNotes) {
-    addedNotes.remove()
-  }
-}
-
-function clearTextArea() {
-  textarea.value = "";
-  textTitle.value = "";
-}
-
-// localStorage.clear("notes");
-
-
-
-
-

@@ -3,9 +3,100 @@ const titleInput = document.getElementById("noteTitle"),
   addButton = document.getElementById("addBtn"),
   noteContainer = document.getElementById("notes"),
   changeView = document.getElementById("toggleView");
-  
-  getFromLocalStorage();
 
+document.addEventListener("DOMContentLoaded", displayNote);
+addButton.addEventListener("click", saveNote);
+
+function saveNote() {
+  const noteTitle = titleInput.value;
+  const noteContent = textInput.value;
+
+  if (noteTitle || noteContent) {
+    const noteProperties = {
+      title: noteTitle,
+      content: noteContent,
+      id: crypto.randomUUID().substring(0, 8),
+      time: getDateAndTime("date"),
+      date: getDateAndTime(),
+    };
+
+    let notes = JSON.parse(localStorage.getItem("notes")) || [];
+    notes.push(noteProperties);
+
+    localStorage.setItem("notes", JSON.stringify(notes));
+
+    titleInput.value = "";
+    textInput.value = "";
+
+    displayNote();
+  }
+}
+
+function displayNote() {
+  const notes = JSON.parse(localStorage.getItem("notes")) || [];
+  noteContainer.innerHTML = "";
+  console.log(notes);
+
+  notes.map((note, index) => {
+    const { title, content, date, time, id } = note;
+    const noteHTML = `
+      <div class="note">
+        <div class="dateTime">
+          <p>${date}</p>
+          <p>${time}</p>
+        </div>
+        <div class="noteTandP">
+          <h3>${title}</h3>
+          <p>${content}</p>
+        </div>
+        <div class="tool">
+          <button class="editButton" onclick="editNote(${index})"> 
+           <img src="./src/assets/edit.svg" alt="delete"> 
+          </button>
+          <button class="deleteButton" onclick="deleteNote(${index})">
+            <img src="./src/assets/delete.svg" alt="delete">
+          </button>
+        </div>
+      </div>
+    `;
+    noteContainer.insertAdjacentHTML("afterbegin", noteHTML);
+  });
+}
+
+function editNote(id) {
+  const notes = JSON.parse(localStorage.getItem("notes"));
+  const note = notes[id];
+
+  titleInput.value = note.title;
+  textInput.value = note.content;
+
+  deleteNote(id);
+}
+
+function deleteNote(id) {
+  let notes = JSON.parse(localStorage.getItem("notes"));
+  notes.splice(id, 1);
+  localStorage.setItem("notes", JSON.stringify(notes));
+  displayNote()
+}
+
+// =================================== //
+function getDateAndTime(type) {
+  const date = new Date();
+
+  if (type === "date") {
+    const dateS = `${date}`;
+    fullDate = dateS.substring(0, 10);
+    return fullDate;
+  } else {
+    const time = date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+    return time;
+  }
+}
 
 //==== input height logic
 titleInput.addEventListener("input", () => {
@@ -25,6 +116,7 @@ addButton.addEventListener("click", function (e) {
 });
 //==== input height logic
 
+
 // toggle view
 let setView = true;
 changeView.addEventListener("click", function () {
@@ -38,166 +130,4 @@ changeView.addEventListener("click", function () {
   }
 });
 
-
-addButton.addEventListener("click", createNotes);
-
-function createNotes() {
-  const title = titleInput.value,
-    note = textInput.value,
-    date = getDateAndTime("date"),
-    time = getDateAndTime();
-
-    
-
-  if (title || note) {
-    const noteHTML = `
-      <div class="note">
-        <div class="dateTime">
-          <p>${date}</p>
-          <p>${time}</p>
-        </div>
-        <div class="noteTandP">
-          <h3>${title}</h3>
-          <p>${note}</p>
-        </div>
-        <div class="tool">
-          <button class="editButton"> 
-          <img src="./src/assets/edit.svg" alt="delete"> 
-          </button>
-          <button class="deleteButton">
-            <img src="./src/assets/delete.svg" alt="delete">
-          </button>
-        </div>
-      </div>
-    `;
-
-    // Insert the note into the container
-    noteContainer.insertAdjacentHTML("afterbegin", noteHTML);
-    addToLocalStorage();
-    clearTextArea();
-
-    // Event listener for the delete button
-
-    const editBtn = noteContainer.querySelector(".note .tool .editButton");
-    editBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      editNote(note);
-    })
-
-    const delBtn = noteContainer.querySelector(".note .tool button:last-child");
-    delBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      delBtn.closest(".note").remove();
-      removeFromLocalStorage(note);
-    });
-  }
-}
-
-function removeFromLocalStorage(noteContent) {
-  let notes = JSON.parse(localStorage.getItem("notes")) || [];
-  notes = notes.filter((note) => note.notes === noteContent);
-  localStorage.setItem("notes", JSON.stringify(notes));
-}
-
-// dfghjkl;
-function editNote(noteD) {
-  console.log(noteD);
-  let notes = JSON.parse(localStorage.getItem("notes")) || [];
-  console.log(notes)
-  notes = notes.filter((note) => {
-    // note.notes !== noteD;
-    if (note.notes === noteD) {
-      console.log("equal")
-      document.createElement("div")
-      
-    }
-  });
-
-   
-  // console.log(notes)
-}
-
-function addToLocalStorage() {
-  const existingNote = localStorage.getItem("notes");
-  const noteArray = existingNote ? JSON.parse(existingNote) : [];
-
-  const noteObj = {
-    id: crypto.randomUUID(),
-    title: titleInput.value,
-    notes: textInput.value,
-    date: getDateAndTime("date"),
-    time: getDateAndTime(),
-  };
-
-  noteArray.push(noteObj);
-  localStorage.setItem("notes", JSON.stringify(noteArray));
-}
-
-function getFromLocalStorage() {
-  const storedNotes = localStorage.getItem("notes");
-  if (!storedNotes) {
-    console.log("No note");
-    return;
-  }
-  const covertedNotes = JSON.parse(storedNotes);
-
-  covertedNotes.map((note) => {
-    const { title, notes, date, time } = note;
-
-    const noteEl = `
-       <div class="dateTime">
-        <p>${date}</p>
-        <p>${time}</p>
-       </div>
-
-      
-        <div class="noteTandP">
-          <h3>${title}</h3>
-          <p>${notes}</p>
-        </div>
-
-        <div class="tool">
-        <span class="" > <img src="./src/assets/edit.svg" alt="delete"> </span>
-        <button>
-            <img src="./src/assets/delete.svg" alt="delete">
-          </button>
-
-        </div>
-`;
-    const div = document.createElement("div");
-    div.className = "note";
-    div.innerHTML = noteEl;
-    noteContainer.prepend(div);
-
-    const delBtn = noteContainer.querySelector(".note .tool button:last-child");
-    delBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      delBtn.closest(".note").remove();
-      removeFromLocalStorage(notes);
-    });
-  });
-}
-
-function getDateAndTime(type) {
-  const date = new Date();
-
-  if (type === "date") {
-    const dateS = `${date}`;
-    fullDate = dateS.substring(0, 10);
-    return fullDate;
-  } else {
-    const time = date.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    });
-    return time;
-  }
-}
-
-function clearTextArea() {
-  titleInput.value = "";
-  textInput.value = "";
-}
-
-// tyuio
+// toggle view

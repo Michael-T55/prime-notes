@@ -48,6 +48,7 @@
       <input type="text" id="note-title" placeholder="Title" />
       <textarea id="note-content" placeholder="Your note..."></textarea>
       <button onclick="saveNote()">Save Note</button>
+      
     </div>
     <div id="notes"></div>
 
@@ -111,6 +112,7 @@
         localStorage.setItem("notes", JSON.stringify(notes));
         loadNotes();
       }
+    
     </script>
   </body>
 </html>
